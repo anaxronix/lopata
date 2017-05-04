@@ -1,0 +1,23 @@
+{
+  "name": "lopata",
+  "version": "1.0.0",
+  "description": "Myfirst app",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anaxronix/lopata.git"
+  },
+  "author": "Anton Balashov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anaxronix/lopata/issues"
+  },
+  "homepage": "https://github.com/anaxronix/lopata#readme",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "express": "^4.15.2"
+  }
+}
