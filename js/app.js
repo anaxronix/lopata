@@ -18,9 +18,10 @@ class CityForm extends React.Component{
     }
 
     handleSubmit(event){
-        alert('A city was submitted: ' + this.state.value);
-          event.preventDefault();
-         }
+        
+        event.preventDefault();
+        this.props.onCityChanged(this.state.value);
+    }
 
     render(){
         return (
@@ -55,14 +56,11 @@ var WeatherContainer = React.createClass({
         }
     },
 
-    componentDidMount: function(){
-        var _this = this,
-            city = 'Moscow';
-
-
-
-        axios.get('http://api.openweathermap.org/data/2.5/weather?q='+ city +'&appid=6421848aff2d6167b679e51b9ad01f8e').then(function(response){
-            _this.setState({
+    componentWillReceiveProps : function(nextProps) {
+        //alert('A city was submitted: ' + nextProps.city);
+        let that = this;
+        axios.get('http://api.openweathermap.org/data/2.5/weather?q='+ nextProps.city +'&appid=6421848aff2d6167b679e51b9ad01f8e').then(function(response){
+            that.setState({
                             coord: response.data.coord,
                             weather: response.data.weather,
                             base: response.data.base,
@@ -82,6 +80,9 @@ var WeatherContainer = React.createClass({
     },
 
     render: function(){
+        if (!this.state.id) {
+            return <div></div>;
+        }
         return (
             <div>
                 <p>  </p>
@@ -217,19 +218,28 @@ var News = React.createClass({
 });
 
 **/
+class App extends React.Component{
+    constructor(props){
+         super(props);
+        this.handleCityChange = this.handleCityChange.bind(this);
+        this.state = {city: null};
+    }
 
-var App = React.createClass({
-    render: function(){
+    handleCityChange(city) {
+        this.setState({city : city});
+    }
+
+    render() {
+        let city = this.state.city;
         return(
             <div className="app">
-                <CityForm />
-                <WeatherContainer />
-
+                <CityForm onCityChanged={this.handleCityChange} />
+                <WeatherContainer city={city} />
             </div>
 
         );
     }
-});
+};
 
 
 
